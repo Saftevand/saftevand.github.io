@@ -1,0 +1,16 @@
+﻿@inject NavigationManager nav
+
+<a href="@RedirectionPath"
+   class="flex items-center space-x-3 rounded-lg px-3 py-2 text-gray-300 transition-colors duration-200 hover:bg-gray-700 hover:text-white">
+    <span class="material-symbols-outlined text-3xl">@MaterialIcon</span>
+    <span>@LocalizationPath</span>
+</a>
+
+@code {
+    [Parameter]
+    public required string MaterialIcon { get; init; }
+    [Parameter]
+    public required string RedirectionPath { get; init;  }
+    [Parameter]
+    public required string LocalizationPath { get; init; }
+}
