@@ -21,13 +21,20 @@ namespace GrovemoorSite.Layout
                 SubPath = "",
                 LocalizationNamePath = "NavLink_Home",
                 IsPublished = true
+            },
+            new Route
+            {
+                MaterialIcon = "Code",
+                SubPath = "/clicktastic",
+                LocalizationNamePath = "Click",
+                IsPublished = true
             }
             ]);
 
         public static AppRoutes HeaderRoutes { get; } = new AppRoutes(
         [
             new Route {
-                SubPath = "",
+                SubPath = "/",
                 LocalizationNamePath = "Header_Home",
                 IsPublished = true
             }
