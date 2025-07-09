@@ -31,7 +31,7 @@ namespace GrovemoorSite.Layout
             },
             new Route
             {
-                MaterialIcon = "Skillet",
+                MaterialIcon = "Menu_Book_2",
                 SubPath = "/Cookbook",
                 LocalizationNamePath = "Cookbook",
                 IsPublished = true
