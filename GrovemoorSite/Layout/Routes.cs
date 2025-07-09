@@ -24,9 +24,16 @@ namespace GrovemoorSite.Layout
             },
             new Route
             {
-                MaterialIcon = "Code",
+                MaterialIcon = "Left_Click",
                 SubPath = "/clicktastic",
                 LocalizationNamePath = "Click",
+                IsPublished = true
+            },
+            new Route
+            {
+                MaterialIcon = "Skillet",
+                SubPath = "/Cookbook",
+                LocalizationNamePath = "Cookbook",
                 IsPublished = true
             }
             ]);

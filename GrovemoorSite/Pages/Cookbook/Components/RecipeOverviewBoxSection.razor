@@ -1,0 +1,19 @@
+<h2 class="text-lg text-gray-800">
+    @SectionTitle
+</h2>
+<hr />
+<ul>
+    @foreach (Ingredient ingredient in Ingredients)
+    {
+        <li>
+            ingredient.ToString();
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public string SectionTitle { get; set; } = "";
+    [Parameter]
+    public List<Ingredient> Ingredients { get; set; } = [];
+}
