@@ -9,6 +9,6 @@ public class Ingredient(string name, int amount, MeaseringUnit measeringUnit, bo
 
     public override string ToString()
     {
-        return $"{Amount} {(Unit != MeaseringUnit.None ? Unit.ToString() + " " : "")} {Name}{(Unit == MeaseringUnit.None ? "s" : "")}{(Optional ? "*" : "")}{(Note != "" ? " (" + Note + ")" : "")}";
+        return $"{Amount} {(Unit != MeaseringUnit.None ? Unit.ToString() + " " : "")} {Name}{(Unit == MeaseringUnit.None ? "s" : "")}{(Note != "" ? " (" + Note + ")" : "")}";
     }
 }

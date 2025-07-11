@@ -6,6 +6,12 @@
     @foreach (Ingredient ingredient in Ingredients)
     {
         <li>
+            @if(ingredient.Optional)
+            {
+                <span class="material-symbols-outlined">
+                    asterisk
+                </span>
+            }
             @ingredient.ToString();
         </li>
     }

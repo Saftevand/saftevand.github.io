@@ -16,6 +16,12 @@
             Total time: @TotalTime
         </p>
     </div>
+    <p>
+        Optional ingredients are marked by 
+        <span class="material-symbols-outlined">
+            asterisk
+        </span>
+    </p>
     @foreach (IngredientSection ingredientSection in IngredientSections)
     {
         <RecipeOverviewBoxSection SectionTitle="@ingredientSection.SectionTitle"
