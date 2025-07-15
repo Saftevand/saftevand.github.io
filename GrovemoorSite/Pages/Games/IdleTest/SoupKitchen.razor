@@ -1,0 +1,72 @@
+@page "/SoupKitchen"
+@using GrovemoorSite.Pages.Games.IdleTest.Models
+@using GrovemoorSite.Pages.Games.IdleTest.Views
+
+<div class="w-full p-2">
+    <div class="flex flex-row">
+        <span class="material-symbols-outlined">
+            universal_currency_alt
+        </span>
+        @Inventory.Money
+    </div>
+</div>
+<div class="flex flex-row gap-4 border-2">
+    <button>
+        <span class="material-symbols-outlined">
+            dashboard_2
+        </span>
+        Overview
+    </button>
+    <button>
+        <span class="material-symbols-outlined">
+            shelves
+        </span>
+        Inventory
+    </button>
+    <button>
+        <span class="material-symbols-outlined">
+            grass
+        </span>
+        Field
+    </button>
+    <button>
+        <span class="material-symbols-outlined">
+            soup_kitchen
+        </span>
+        Kitchen
+    </button>
+    <button>
+        <span class="material-symbols-outlined">
+            storefront
+        </span>
+        Market
+    </button>
+</div>
+
+@if(currentView == ViewType.Overview)
+{
+    <OverviewView />
+}
+else @if(currentView == ViewType.Inventory)
+{
+    <InventoryView Inventory="Inventory" />
+}
+else @if(currentView == ViewType.Field)
+{
+    <FieldView />
+}
+else @if(currentView == ViewType.Kitchen)
+{
+    <KitchenView />
+}
+
+
+
+
+@code {
+    public int Counter = 0;
+    public Inventory Inventory = new();
+    private ViewType currentView = ViewType.Overview;
+
+
+}

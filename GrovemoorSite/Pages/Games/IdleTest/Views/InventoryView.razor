@@ -1,0 +1,17 @@
+﻿@using GrovemoorSite.Pages.Games.IdleTest.Models
+
+<h3>Inventory</h3>
+
+<div class="grid grid-rows-3 gap-2">
+    <p>@Inventory.Seed</p>
+    <p>Seed@(Inventory.Seed > 0 ? "s" : "")</p>
+    <span class="material-symbols-outlined">
+        potted_plant
+    </span>
+</div>
+
+
+@code {
+    [Parameter]
+    public Inventory Inventory { get; set; }
+}

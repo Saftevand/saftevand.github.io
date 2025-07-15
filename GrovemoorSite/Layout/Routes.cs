@@ -24,9 +24,9 @@ namespace GrovemoorSite.Layout
             },
             new Route
             {
-                MaterialIcon = "Left_Click",
-                SubPath = "/clicktastic",
-                LocalizationNamePath = "Click",
+                MaterialIcon = "Soup_Kitchen",
+                SubPath = "/SoupKitchen",
+                LocalizationNamePath = "Soup Kitchen",
                 IsPublished = true
             },
             new Route
