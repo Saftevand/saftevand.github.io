@@ -4,7 +4,7 @@
     {
         public static Dictionary<ItemType, Item> Items = new()
         {
-            { ItemType.Seed, new Item(ItemType.Seed, "Seed", 5, 0) }
+            { ItemType.Seed, new Item(ItemType.Seed, "Seed", 5, "potted_plant", 0) }
         };
     }
 }

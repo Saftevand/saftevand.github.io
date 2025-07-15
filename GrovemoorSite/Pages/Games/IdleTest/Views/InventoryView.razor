@@ -3,11 +3,14 @@
 <h3>Inventory</h3>
 
 <div class="grid grid-rows-3 gap-2">
-    <p>@Inventory.Seed</p>
-    <p>Seed@(Inventory.Seed > 0 ? "s" : "")</p>
-    <span class="material-symbols-outlined">
-        potted_plant
-    </span>
+    @foreach (var item in Inventory.Items.Keys)
+    {
+        <p>@Inventory.Items[item]</p>
+        <p>@AutoLoad.Items[item].Name@(Inventory.Items[item] > 0 ? "s" : "")</p>
+        <span class="material-symbols-outlined">
+            @AutoLoad.Items[item].Icon
+        </span>
+    }
 </div>
 
 
