@@ -11,31 +11,31 @@
     </div>
 </div>
 <div class="flex flex-row gap-4 border-2">
-    <button>
+    <button @onclick="@(() => currentView = ViewType.Overview)">
         <span class="material-symbols-outlined">
             dashboard_2
         </span>
         Overview
     </button>
-    <button>
+    <button @onclick="@(() => currentView = ViewType.Inventory)">
         <span class="material-symbols-outlined">
             shelves
         </span>
         Inventory
     </button>
-    <button>
+    <button @onclick="@(() => currentView = ViewType.Field)">
         <span class="material-symbols-outlined">
             grass
         </span>
         Field
     </button>
-    <button>
+    <button @onclick="@(() => currentView = ViewType.Kitchen)">
         <span class="material-symbols-outlined">
             soup_kitchen
         </span>
         Kitchen
     </button>
-    <button>
+    <button @onclick="@(() => currentView = ViewType.Market)">
         <span class="material-symbols-outlined">
             storefront
         </span>
@@ -45,7 +45,7 @@
 
 @if(currentView == ViewType.Overview)
 {
-    <OverviewView />
+    <OverviewView Inventory="Inventory" />
 }
 else @if(currentView == ViewType.Inventory)
 {
@@ -53,14 +53,16 @@ else @if(currentView == ViewType.Inventory)
 }
 else @if(currentView == ViewType.Field)
 {
-    <FieldView />
+    <FieldView Inventory="Inventory" />
 }
 else @if(currentView == ViewType.Kitchen)
 {
-    <KitchenView />
+    <KitchenView Inventory="Inventory" />
 }
-
-
+else @if (currentView == ViewType.Market)
+{
+    <MarketView Inventory="Inventory" />
+}
 
 
 @code {

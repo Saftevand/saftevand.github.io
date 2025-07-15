@@ -5,7 +5,8 @@
         Overview,
         Inventory,
         Field,
-        Kitchen
+        Kitchen,
+        Market
     }
 
     public enum ItemType
