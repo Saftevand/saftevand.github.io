@@ -2,13 +2,14 @@
 @using GrovemoorSite.Pages.Games.IdleTest.Models
 <h3>FieldView</h3>
 
-<ProgressBar Progress="@progress" class="w-[25rem]" />
-<button @onclick="()=> progress++">
+<button @onclick="()=> Progress++">
     click
 </button>
+@Progress
+<ProgressBar Progress="@Progress" class="w-[25rem]" />
 
 @code {
     [Parameter]
     public Inventory Inventory { get; set; }
-    public int progress { get; set; }
+    public int Progress { get; set; }
 }
