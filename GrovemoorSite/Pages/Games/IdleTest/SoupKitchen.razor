@@ -10,6 +10,7 @@
         @Inventory.Money
     </div>
 </div>
+<hr />
 <div class="flex flex-row gap-4 border-2">
     <button @onclick="@(() => currentView = ViewType.Overview)">
         <span class="material-symbols-outlined">
@@ -42,6 +43,7 @@
         Market
     </button>
 </div>
+<hr />
 
 @if(currentView == ViewType.Overview)
 {
@@ -69,6 +71,4 @@ else @if (currentView == ViewType.Market)
     public int Counter = 0;
     public Inventory Inventory = new();
     private ViewType currentView = ViewType.Overview;
-
-
 }
