@@ -1,11 +1,11 @@
 ﻿@using GrovemoorSite.Pages.Games.IdleTest.Components
 @using GrovemoorSite.Pages.Games.IdleTest.Models
+@using System.Timers;
 <h3>FieldView</h3>
 
 <button @onclick="()=> Progress++">
     click
 </button>
-@Progress
 <div class="w-[25rem]">
     <ProgressBar Progress="@Progress"/>
 </div>
@@ -14,4 +14,22 @@
     [Parameter]
     public Inventory Inventory { get; set; }
     public int Progress { get; set; }
+    public Timer TickTimer { get; set; }
+
+    protected override void OnInitialized()
+    {
+        TickTimer = new();
+        TickTimer.Interval = 100;
+        TickTimer.Elapsed += OnTick;
+    }
+
+    private void OnTick(object source, ElapsedEventArgs e)
+    {
+        if(Progress >= 100)
+        {
+            Inventory.AddItem(ItemType.Seed);
+            Progress = 0;
+        }
+        else Progress++;
+    }
 }
