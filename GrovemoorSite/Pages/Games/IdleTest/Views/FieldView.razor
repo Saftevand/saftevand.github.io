@@ -17,10 +17,11 @@
     public Timer TickTimer { get; set; }
     public int Progress { get; set; }
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         TickTimer.Elapsed += OnTick;
     }
+
 
     private void OnTick(object source, ElapsedEventArgs e)
     {

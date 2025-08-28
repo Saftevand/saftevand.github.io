@@ -69,10 +69,9 @@ else @if (currentView == ViewType.Market)
     <MarketView Inventory="Inventory" />
 }
 
-
 @code {
     public Inventory Inventory = new();
-    public Timer TickTimer { get; set; }
+    public Timer TickTimer { get; set; } = new();
     private ViewType currentView = ViewType.Overview;
     private int TickCounter = 0;
     
