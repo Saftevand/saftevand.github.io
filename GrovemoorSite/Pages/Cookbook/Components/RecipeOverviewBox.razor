@@ -1,0 +1,38 @@
+<div class="p-4 bg-white/50 rounded">
+    <p>
+        @Title
+    </p>
+    <div class="flex flex-row gap-4">
+        <p class="flex flex-row">
+            <span class="material-symbols-outlined">
+                skillet
+            </span>
+            Work time: @WorkTime
+        </p>
+        <p class="flex flex-row">
+            <span class="material-symbols-outlined">
+                schedule
+            </span>
+            Total time: @TotalTime
+        </p>
+    </div>
+    <p>
+        Optional ingredients are marked by an asterisk(*)
+    </p>
+    @foreach (IngredientSection ingredientSection in IngredientSections)
+    {
+        <RecipeOverviewBoxSection SectionTitle="@ingredientSection.SectionTitle"
+            Ingredients="@ingredientSection.Ingredients" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Placeholder Title";
+    [Parameter]
+    public List<IngredientSection> IngredientSections { get; set; } = [];
+    [Parameter]
+    public int WorkTime { get; set; } = 0;
+    [Parameter]
+    public int TotalTime { get; set; } = 0;
+}

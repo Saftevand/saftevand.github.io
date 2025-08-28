@@ -1,0 +1,74 @@
+@page "/SoupKitchen"
+@using GrovemoorSite.Pages.Games.IdleTest.Models
+@using GrovemoorSite.Pages.Games.IdleTest.Views
+
+<div class="w-full p-2">
+    <div class="flex flex-row">
+        <span class="material-symbols-outlined">
+            universal_currency_alt
+        </span>
+        @Inventory.Money
+    </div>
+</div>
+<hr />
+<div class="flex flex-row gap-4 border-2">
+    <button @onclick="@(() => currentView = ViewType.Overview)">
+        <span class="material-symbols-outlined">
+            dashboard_2
+        </span>
+        Overview
+    </button>
+    <button @onclick="@(() => currentView = ViewType.Inventory)">
+        <span class="material-symbols-outlined">
+            shelves
+        </span>
+        Inventory
+    </button>
+    <button @onclick="@(() => currentView = ViewType.Field)">
+        <span class="material-symbols-outlined">
+            grass
+        </span>
+        Field
+    </button>
+    <button @onclick="@(() => currentView = ViewType.Kitchen)">
+        <span class="material-symbols-outlined">
+            soup_kitchen
+        </span>
+        Kitchen
+    </button>
+    <button @onclick="@(() => currentView = ViewType.Market)">
+        <span class="material-symbols-outlined">
+            storefront
+        </span>
+        Market
+    </button>
+</div>
+<hr />
+
+@if(currentView == ViewType.Overview)
+{
+    <OverviewView Inventory="Inventory" />
+}
+else @if(currentView == ViewType.Inventory)
+{
+    <InventoryView Inventory="Inventory" />
+}
+else @if(currentView == ViewType.Field)
+{
+    <FieldView Inventory="Inventory" />
+}
+else @if(currentView == ViewType.Kitchen)
+{
+    <KitchenView Inventory="Inventory" />
+}
+else @if (currentView == ViewType.Market)
+{
+    <MarketView Inventory="Inventory" />
+}
+
+
+@code {
+    public int Counter = 0;
+    public Inventory Inventory = new();
+    private ViewType currentView = ViewType.Overview;
+}
