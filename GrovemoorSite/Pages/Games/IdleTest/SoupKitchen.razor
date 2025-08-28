@@ -1,8 +1,11 @@
 @page "/SoupKitchen"
 @using GrovemoorSite.Pages.Games.IdleTest.Models
 @using GrovemoorSite.Pages.Games.IdleTest.Views
+@using System.Timers;
+
 
 <div class="w-full p-2">
+    @TickCounter | 
     <div class="flex flex-row">
         <span class="material-symbols-outlined">
             universal_currency_alt
@@ -55,7 +58,7 @@ else @if(currentView == ViewType.Inventory)
 }
 else @if(currentView == ViewType.Field)
 {
-    <FieldView Inventory="Inventory" />
+    <FieldView Inventory="Inventory" TickTimer="TickTimer" />
 }
 else @if(currentView == ViewType.Kitchen)
 {
@@ -68,7 +71,21 @@ else @if (currentView == ViewType.Market)
 
 
 @code {
-    public int Counter = 0;
     public Inventory Inventory = new();
+    public Timer TickTimer { get; set; }
     private ViewType currentView = ViewType.Overview;
+    private int TickCounter = 0;
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        TickTimer.Interval = 100;
+        TickTimer.Elapsed += OnTick();
+    }
+
+    private ElapsedEventHandler OnTick()
+    {
+        TickCounter++;
+        return null;
+    }
 }

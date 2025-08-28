@@ -13,13 +13,12 @@
 @code {
     [Parameter]
     public Inventory Inventory { get; set; }
-    public int Progress { get; set; }
+    [Parameter]
     public Timer TickTimer { get; set; }
+    public int Progress { get; set; }
 
     protected override void OnInitialized()
     {
-        TickTimer = new();
-        TickTimer.Interval = 100;
         TickTimer.Elapsed += OnTick;
     }
 
