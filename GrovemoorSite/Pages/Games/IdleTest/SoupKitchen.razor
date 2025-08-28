@@ -80,6 +80,7 @@ else @if (currentView == ViewType.Market)
     {
         TickTimer.Interval = 100;
         TickTimer.Elapsed += OnTick();
+        TickTimer.Start();
     }
 
     private ElapsedEventHandler OnTick()
