@@ -59,7 +59,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }} # GitHub Token automatically provided
           publish_dir: ./release/wwwroot # The directory containing your published Blazor app's static files
-          cname: grovemoor.com
+          cname: public.grovemoor.com
           publish_branch: gh-pages # The branch where GitHub Pages will serve from (will be created if it doesn't exist)
           force_orphan: true # Forces the gh-pages branch to be re-created from scratch on each deploy
 
