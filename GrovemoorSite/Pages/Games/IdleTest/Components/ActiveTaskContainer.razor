@@ -1,17 +1,27 @@
 @using GrovemoorSite.Pages.Games.IdleTest.Models
 
-<h3>ActiveTaskContainer</h3>
-
-<div>
-    <p>
-        @CurrentTask.Title
-    </p>
-    <ProgressBar @ref="_progressBar" Progress="0"></ProgressBar>
+<div class="p-4 border border-1 border-black rounded">
+    <h3>ActiveTaskContainer</h3>
+    @if (CurrentTask != null)
+    {
+        <div>
+            <p>
+                @CurrentTask.Title | @CurrentTask.TickCounter / @CurrentTask.TicksTotal
+            </p>
+            <ProgressBar @ref="_progressBar" Progress="0"></ProgressBar>
+        </div>
+    }
+    else
+    {
+        <p>
+            No active Task
+        </p>
+    }
 </div>
 
 @code {
     [Parameter] 
-    public required ActiveTask CurrentTask { get; set; }
+    public ActiveTask? CurrentTask { get; set; }
     [Parameter]
     public Timer TickTimer { get; set; } = new();
 
@@ -28,9 +38,18 @@
     {
         _progressBar.Progress = System.Math.Min(100, (int)((100 / CurrentTask.TicksTotal) * CurrentTask.TickCounter));
         CurrentTask.TickCounter++;
-        if (_progressBar.Progress == 100)
+        if (CurrentTask.TickCounter >= CurrentTask.TicksTotal)
         {
             CurrentTask.OnTaskComplete.Invoke();
+            if (CurrentTask.Repeatable)
+            {
+                CurrentTask.TickCounter = 0;
+            }
+            else
+            {
+                CurrentTask = null;
+            }
         }
+        StateHasChanged();
     }
 }
