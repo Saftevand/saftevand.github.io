@@ -6,7 +6,7 @@
     @foreach (var item in Inventory.Items.Keys)
     {
         <div class="flex flex-row">
-            <InputNumber Value="Inventory.Items[item]">@Inventory.Items[item]</InputNumber>
+            <InputNumber @bind-Value="Inventory.Items[item]"></InputNumber>
             <p>@AutoLoad.Items[item].Name@(Inventory.Items[item] > 0 ? "s" : "")</p>
             <span class="material-symbols-outlined">
                 @AutoLoad.Items[item].Icon
