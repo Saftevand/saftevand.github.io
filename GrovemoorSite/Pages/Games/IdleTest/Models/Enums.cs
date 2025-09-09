@@ -11,6 +11,7 @@
 
     public enum ItemType
     {
-        Seed
+        Seed,
+        Tomato
     }
 }

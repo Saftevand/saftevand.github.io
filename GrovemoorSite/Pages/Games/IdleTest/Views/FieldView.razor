@@ -1,19 +1,40 @@
 ﻿@using GrovemoorSite.Pages.Games.IdleTest.Components
 @using GrovemoorSite.Pages.Games.IdleTest.Models
 
-<h3>FieldView</h3>
-
-<button @onclick="()=> Progress++">
-    click
-</button>
-<div class="w-[25rem]">
-    <ProgressBar Progress="@Progress"/>
+<div>
+    <h3>FieldView</h3>
+    <div>
+        <p>
+            Selected crop: @AutoLoad.Items[_selectedCrop].Name 
+        </p>
+        <span class="material-symbols-outlined">
+            @AutoLoad.Items[_selectedCrop].Icon
+        </span>
+    </div>
+    <div>
+        <p>Fields: @_fieldTask.Count /  @_maxFields</p>
+        <button @onclick="_plantField">Plant new field</button>
+    </div>
+    <div>
+        @foreach(ActiveTask task in _fieldTask)
+        {
+            <Field @ref="FieldHelper" OnTaskFinished="ClearField" CurrentTask="task"></Field>
+        }
+    </div>
 </div>
+
 
 @code {
     [Parameter]
     public Timer TickTimer { get; set; } = new();
-    public int Progress { get; set; }
+    private int _maxFields = 5;
+    private List<ActiveTask> _fieldTask = new()
+    {
+        new("Tomato",250, () => Inventory.AddItem(ItemType.Tomato), new())
+    };
+    private ItemType _selectedCrop = ItemType.Tomato;
+    private List<Field> _fields = new();
+    private Field FieldHelper { set { _fields.Add(value);}}
 
     protected override void OnParametersSet()
     {
@@ -23,11 +44,20 @@
 
     private void OnTick(object? source, ElapsedEventArgs e)
     {
-        if(Progress >= 100)
+        foreach (var field in _fields)
         {
-            Inventory.AddItem(ItemType.Seed);
-            Progress = 0;
+            field.OnTick();
         }
-        else Progress++;
+        StateHasChanged();
+    }
+
+    private void _plantField()
+    {
+        _fieldTask.Add(new("Tomato",250, () => Inventory.AddItem(ItemType.Tomato), new()));
+    }
+
+    private void ClearField(Field field)
+    {
+        _fields.Remove(field);
     }
 }

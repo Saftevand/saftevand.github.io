@@ -3,79 +3,80 @@
 @using GrovemoorSite.Pages.Games.IdleTest.Components
 
 @page "/SoupKitchen"
-
-<div class="w-full p-2">
-    @_tickCounter | 
-    <div class="flex flex-row">
-        <span class="material-symbols-outlined">
-            universal_currency_alt
-        </span>
-        @Inventory.Money
+<div class="w-full h-full relative">
+    <div class="w-full p-2">
+        @_tickCounter | 
+        <div class="flex flex-row">
+            <span class="material-symbols-outlined">
+                universal_currency_alt
+            </span>
+            @Inventory.Money
+        </div>
     </div>
-</div>
-<hr />
-<div class="flex flex-row gap-4 border-2">
-    <button @onclick="@(() => _currentView = ViewType.Overview)">
-        <span class="material-symbols-outlined">
-            dashboard_2
-        </span>
-        Overview
-    </button>
-    <button @onclick="@(() => _currentView = ViewType.Inventory)">
-        <span class="material-symbols-outlined">
-            shelves
-        </span>
-        Inventory
-    </button>
-    <button @onclick="@(() => _currentView = ViewType.Field)">
-        <span class="material-symbols-outlined">
-            grass
-        </span>
-        Field
-    </button>
-    <button @onclick="@(() => _currentView = ViewType.Kitchen)">
-        <span class="material-symbols-outlined">
-            soup_kitchen
-        </span>
-        Kitchen
-    </button>
-    <button @onclick="@(() => _currentView = ViewType.Market)">
-        <span class="material-symbols-outlined">
-            storefront
-        </span>
-        Market
-    </button>
-</div>
-<hr />
+    <hr />
+    <div class="flex flex-row gap-4 border-2">
+        <button @onclick="@(() => _currentView = ViewType.Overview)">
+            <span class="material-symbols-outlined">
+                dashboard_2
+            </span>
+            Overview
+        </button>
+        <button @onclick="@(() => _currentView = ViewType.Inventory)">
+            <span class="material-symbols-outlined">
+                shelves
+            </span>
+            Inventory
+        </button>
+        <button @onclick="@(() => _currentView = ViewType.Field)">
+            <span class="material-symbols-outlined">
+                grass
+            </span>
+            Field
+        </button>
+        <button @onclick="@(() => _currentView = ViewType.Kitchen)">
+            <span class="material-symbols-outlined">
+                soup_kitchen
+            </span>
+            Kitchen
+        </button>
+        <button @onclick="@(() => _currentView = ViewType.Market)">
+            <span class="material-symbols-outlined">
+                storefront
+            </span>
+            Market
+        </button>
+    </div>
+    <hr />
 
-@if (_currentView == ViewType.Overview)
-{
-    <OverviewView />
-}
-@if (_currentView == ViewType.Inventory)
-{
-    <InventoryView />
-}
-@if (_currentView == ViewType.Field)
-{
-    <FieldView TickTimer="_tickTimer"  />
-}
-@if (_currentView == ViewType.Kitchen)
-{
-    <KitchenView />
-}
-@if (_currentView == ViewType.Market)
-{
-    <MarketView />
-}
+    @if (_currentView == ViewType.Overview)
+    {
+        <OverviewView />
+    }
+    @if (_currentView == ViewType.Inventory)
+    {
+        <InventoryView />
+    }
+    @if (_currentView == ViewType.Field)
+    {
+        <FieldView TickTimer="_tickTimer"  />
+    }
+    @if (_currentView == ViewType.Kitchen)
+    {
+        <KitchenView />
+    }
+    @if (_currentView == ViewType.Market)
+    {
+        <MarketView />
+    }
 
-<ActiveTaskContainer TickTimer="_tickTimer" CurrentTask="CurrentTask"></ActiveTaskContainer>
+    <ActiveTaskContainer TickTimer="_tickTimer" CurrentTask="CurrentTask"></ActiveTaskContainer>
+</div>
 
 
 
 @code {
-    private Timer _tickTimer { get; set; } = new();
-    public ActiveTask CurrentTask = new("Test Task",500, () => Inventory.AddItem(ItemType.Seed));
+    private Timer _tickTimer = new();
+    public ActiveTask CurrentTask = new("Test Task",250, () => Inventory.AddItem(ItemType.Seed), new());
     private ViewType _currentView = ViewType.Overview;
     private int _tickCounter = 0;
     

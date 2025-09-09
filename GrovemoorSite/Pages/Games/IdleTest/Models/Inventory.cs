@@ -16,5 +16,10 @@
                 Items.Add(item, amount);
             }
         }
+
+        public static void RemoveItem(ItemType item, int amount = 1)
+        {
+            Items[item] -= amount;
+        }
     }
 }

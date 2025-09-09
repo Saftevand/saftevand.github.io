@@ -40,19 +40,28 @@
         {
             return;
         }
-        _progress = System.Math.Min(100, (int)((100 / CurrentTask.TicksTotal) * CurrentTask.TickCounter));
         CurrentTask.TickCounter++;
+        _progress = System.Math.Min(100, (int)((100 / CurrentTask.TicksTotal) * CurrentTask.TickCounter));
         if (CurrentTask.TickCounter >= CurrentTask.TicksTotal)
         {
             CurrentTask.OnTaskComplete.Invoke();
             if (CurrentTask.Repeatable)
             {
-                CurrentTask.TickCounter = 0;
+                bool taskStarted = CurrentTask.StartTask();
+                if (taskStarted)
+                {
+                    CurrentTask.TickCounter = 0;
+                }
+                else
+                {
+                    CurrentTask = null;
+                }
             }
             else
             {
                 CurrentTask = null;
             }
         }
+        StateHasChanged();
     }
 }

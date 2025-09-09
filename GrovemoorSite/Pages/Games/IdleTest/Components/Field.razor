@@ -1,0 +1,39 @@
+@using GrovemoorSite.Pages.Games.IdleTest.Models
+<h3>Field</h3>
+
+<ProgressBar Progress="_progress"></ProgressBar>
+
+@code {
+    [Parameter]
+    public required ActiveTask CurrentTask { get; set; }
+    [Parameter]
+    public required Action<Field> OnTaskFinished { get; set; }
+    private int _progress = 0;
+    
+    public void OnTick()
+    {
+        CurrentTask.TickCounter++;
+        _progress = System.Math.Min(100, (int)((100 / CurrentTask.TicksTotal) * CurrentTask.TickCounter));
+        if (CurrentTask.TickCounter >= CurrentTask.TicksTotal)
+        {
+            CurrentTask.OnTaskComplete.Invoke();
+            if (CurrentTask.Repeatable)
+            {
+                bool taskStarted = CurrentTask.StartTask();
+                if (taskStarted)
+                {
+                    CurrentTask.TickCounter = 0;
+                }
+                else
+                {
+                    OnTaskFinished.Invoke(this);
+                }
+            }
+            else
+            {
+                OnTaskFinished.Invoke(this);
+            }
+        }
+        StateHasChanged();
+    }
+}
