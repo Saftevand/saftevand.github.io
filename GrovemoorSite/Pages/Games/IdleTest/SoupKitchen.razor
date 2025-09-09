@@ -48,11 +48,27 @@
 </div>
 <hr />
 
-<OverviewView Inventory="Inventory" Hidden="@(currentView == ViewType.Overview)" />
-<InventoryView Inventory="Inventory" Hidden="@(currentView == ViewType.Inventory)" />
-<FieldView Inventory="Inventory" TickTimer="TickTimer" Hidden="@(currentView == ViewType.Field)" />
-<KitchenView Inventory="Inventory" Hidden="@(currentView == ViewType.Kitchen)" />
-<MarketView Inventory="Inventory" Hidden="@(currentView == ViewType.Market)" />
+@if (currentView == ViewType.Overview)
+{
+    <OverviewView Inventory="Inventory"  />
+}
+@if (currentView == ViewType.Inventory)
+{
+    <InventoryView Inventory="Inventory"  />
+}
+@if (currentView == ViewType.Field)
+{
+    <FieldView Inventory="Inventory" TickTimer="TickTimer"  />
+}
+@if (currentView == ViewType.Kitchen)
+{
+    <KitchenView Inventory="Inventory"  />
+}
+@if (currentView == ViewType.Market)
+{
+    <MarketView Inventory="Inventory"  />
+}
+
 
 
 @code {
