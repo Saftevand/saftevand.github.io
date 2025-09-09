@@ -2,6 +2,7 @@
 {
     public class Inventory
     {
+        public Inventory() { }
         public int Money { get; set; } = 5;
         public Dictionary<ItemType, int> Items { get; set; } = new();
 

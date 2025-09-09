@@ -1,6 +1,6 @@
 ﻿@using GrovemoorSite.Pages.Games.IdleTest.Components
 @using GrovemoorSite.Pages.Games.IdleTest.Models
-@using System.Timers;
+
 <h3>FieldView</h3>
 
 <button @onclick="()=> Progress++">
@@ -12,9 +12,9 @@
 
 @code {
     [Parameter]
-    public Inventory Inventory { get; set; }
+    public Inventory Inventory { get; set; } = new();
     [Parameter]
-    public Timer TickTimer { get; set; }
+    public Timer TickTimer { get; set; } = new();
     public int Progress { get; set; }
 
     protected override void OnParametersSet()
@@ -23,7 +23,7 @@
     }
 
 
-    private void OnTick(object source, ElapsedEventArgs e)
+    private void OnTick(object? source, ElapsedEventArgs e)
     {
         if(Progress >= 100)
         {

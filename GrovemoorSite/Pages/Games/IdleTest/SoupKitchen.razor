@@ -1,45 +1,47 @@
 @page "/SoupKitchen"
+@using System.Runtime.CompilerServices
 @using GrovemoorSite.Pages.Games.IdleTest.Models
 @using GrovemoorSite.Pages.Games.IdleTest.Views
 @using System.Timers;
+@using GrovemoorSite.Pages.Games.IdleTest.Components
 
 
 <div class="w-full p-2">
-    @TickCounter | 
+    @_tickCounter | 
     <div class="flex flex-row">
         <span class="material-symbols-outlined">
             universal_currency_alt
         </span>
-        @Inventory.Money
+        @_inventory.Money
     </div>
 </div>
 <hr />
 <div class="flex flex-row gap-4 border-2">
-    <button @onclick="@(() => currentView = ViewType.Overview)">
+    <button @onclick="@(() => _currentView = ViewType.Overview)">
         <span class="material-symbols-outlined">
             dashboard_2
         </span>
         Overview
     </button>
-    <button @onclick="@(() => currentView = ViewType.Inventory)">
+    <button @onclick="@(() => _currentView = ViewType.Inventory)">
         <span class="material-symbols-outlined">
             shelves
         </span>
         Inventory
     </button>
-    <button @onclick="@(() => currentView = ViewType.Field)">
+    <button @onclick="@(() => _currentView = ViewType.Field)">
         <span class="material-symbols-outlined">
             grass
         </span>
         Field
     </button>
-    <button @onclick="@(() => currentView = ViewType.Kitchen)">
+    <button @onclick="@(() => _currentView = ViewType.Kitchen)">
         <span class="material-symbols-outlined">
             soup_kitchen
         </span>
         Kitchen
     </button>
-    <button @onclick="@(() => currentView = ViewType.Market)">
+    <button @onclick="@(() => _currentView = ViewType.Market)">
         <span class="material-symbols-outlined">
             storefront
         </span>
@@ -48,47 +50,51 @@
 </div>
 <hr />
 
-@if (currentView == ViewType.Overview)
+@if (_currentView == ViewType.Overview)
 {
-    <OverviewView Inventory="Inventory"  />
+    <OverviewView Inventory="_inventory"  />
 }
-@if (currentView == ViewType.Inventory)
+@if (_currentView == ViewType.Inventory)
 {
-    <InventoryView Inventory="Inventory"  />
+    <InventoryView Inventory="_inventory"  />
 }
-@if (currentView == ViewType.Field)
+@if (_currentView == ViewType.Field)
 {
-    <FieldView Inventory="Inventory" TickTimer="TickTimer"  />
+    <FieldView Inventory="_inventory" TickTimer="_tickTimer"  />
 }
-@if (currentView == ViewType.Kitchen)
+@if (_currentView == ViewType.Kitchen)
 {
-    <KitchenView Inventory="Inventory"  />
+    <KitchenView Inventory="_inventory"  />
 }
-@if (currentView == ViewType.Market)
+@if (_currentView == ViewType.Market)
 {
-    <MarketView Inventory="Inventory"  />
+    <MarketView Inventory="_inventory"  />
 }
+
+<ActiveTaskContainer TickTimer="_tickTimer" CurrentTask="CurrentTask"></ActiveTaskContainer>
 
 
 
 @code {
-    public Inventory Inventory = new();
-    public Timer TickTimer { get; set; } = new();
-    private ViewType currentView = ViewType.Overview;
-    private int TickCounter = 0;
+    private static Inventory _inventory = new();
+    private Timer _tickTimer { get; set; } = new();
+    public ActiveTask CurrentTask = new("Test Task",500, () => _inventory.AddItem(ItemType.Seed));
+    private ViewType _currentView = ViewType.Overview;
+    private int _tickCounter = 0;
     
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        TickTimer.Interval = 100;
-        TickTimer.Elapsed += OnTick();
-        TickTimer.AutoReset = true;
-        TickTimer.Enabled = true;
+        _tickTimer.Interval = 100;
+        _tickTimer.Elapsed += OnTick();
+        _tickTimer.AutoReset = true;
+        _tickTimer.Enabled = true;
     }
 
     private ElapsedEventHandler OnTick()
     {
-        TickCounter++;
-        return null;
+        _tickCounter++;
+        StateHasChanged();
+        return null!;
     }
 }

@@ -1,0 +1,36 @@
+@using GrovemoorSite.Pages.Games.IdleTest.Models
+
+<h3>ActiveTaskContainer</h3>
+
+<div>
+    <p>
+        @CurrentTask.Title
+    </p>
+    <ProgressBar @ref="_progressBar" Progress="0"></ProgressBar>
+</div>
+
+@code {
+    [Parameter] 
+    public required ActiveTask CurrentTask { get; set; }
+    [Parameter]
+    public Timer TickTimer { get; set; } = new();
+
+    private ProgressBar _progressBar;
+    
+    
+    protected override void OnParametersSet()
+    {
+        TickTimer.Elapsed += OnTick;
+    }
+
+
+    private void OnTick(object? source, ElapsedEventArgs e)
+    {
+        _progressBar.Progress = System.Math.Min(100, (int)((100 / CurrentTask.TicksTotal) * CurrentTask.TickCounter));
+        CurrentTask.TickCounter++;
+        if (_progressBar.Progress == 100)
+        {
+            CurrentTask.OnTaskComplete.Invoke();
+        }
+    }
+}

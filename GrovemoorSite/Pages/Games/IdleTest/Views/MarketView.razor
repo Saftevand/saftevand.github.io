@@ -12,8 +12,8 @@
 </div>
 
 @code {
-    [Parameter]
-    public Inventory Inventory { get; set; }
+    [Parameter] 
+    public Inventory Inventory { get; set; } = new();
 
     private void BuyItem(Item item)
     {
