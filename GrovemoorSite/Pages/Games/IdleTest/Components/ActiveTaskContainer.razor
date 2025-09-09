@@ -41,7 +41,7 @@
             return;
         }
         CurrentTask.TickCounter++;
-        _progress = System.Math.Min(100, (int)((100 / CurrentTask.TicksTotal) * CurrentTask.TickCounter));
+        _progress = System.Math.Min(100, (int)((100.0 / (float)CurrentTask.TicksTotal) * (float)CurrentTask.TickCounter));
         if (CurrentTask.TickCounter >= CurrentTask.TicksTotal)
         {
             CurrentTask.OnTaskComplete.Invoke();
