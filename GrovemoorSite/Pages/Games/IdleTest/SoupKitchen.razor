@@ -1,10 +1,8 @@
-@page "/SoupKitchen"
-@using System.Runtime.CompilerServices
 @using GrovemoorSite.Pages.Games.IdleTest.Models
 @using GrovemoorSite.Pages.Games.IdleTest.Views
-@using System.Timers;
 @using GrovemoorSite.Pages.Games.IdleTest.Components
 
+@page "/SoupKitchen"
 
 <div class="w-full p-2">
     @_tickCounter | 
@@ -12,7 +10,7 @@
         <span class="material-symbols-outlined">
             universal_currency_alt
         </span>
-        @_inventory.Money
+        @Inventory.Money
     </div>
 </div>
 <hr />
@@ -52,23 +50,23 @@
 
 @if (_currentView == ViewType.Overview)
 {
-    <OverviewView Inventory="_inventory"  />
+    <OverviewView />
 }
 @if (_currentView == ViewType.Inventory)
 {
-    <InventoryView Inventory="_inventory"  />
+    <InventoryView />
 }
 @if (_currentView == ViewType.Field)
 {
-    <FieldView Inventory="_inventory" TickTimer="_tickTimer"  />
+    <FieldView TickTimer="_tickTimer"  />
 }
 @if (_currentView == ViewType.Kitchen)
 {
-    <KitchenView Inventory="_inventory"  />
+    <KitchenView />
 }
 @if (_currentView == ViewType.Market)
 {
-    <MarketView Inventory="_inventory"  />
+    <MarketView />
 }
 
 <ActiveTaskContainer TickTimer="_tickTimer" CurrentTask="CurrentTask"></ActiveTaskContainer>
@@ -76,9 +74,8 @@
 
 
 @code {
-    private static Inventory _inventory = new();
     private Timer _tickTimer { get; set; } = new();
-    public ActiveTask CurrentTask = new("Test Task",500, () => _inventory.AddItem(ItemType.Seed));
+    public ActiveTask CurrentTask = new("Test Task",500, () => Inventory.AddItem(ItemType.Seed));
     private ViewType _currentView = ViewType.Overview;
     private int _tickCounter = 0;
     
@@ -94,6 +91,7 @@
     private ElapsedEventHandler OnTick()
     {
         _tickCounter++;
+        StateHasChanged();
         return null!;
     }
 }

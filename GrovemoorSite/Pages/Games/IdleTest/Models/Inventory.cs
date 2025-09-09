@@ -1,12 +1,11 @@
 ﻿namespace GrovemoorSite.Pages.Games.IdleTest.Models
 {
-    public class Inventory
+    public static class Inventory
     {
-        public Inventory() { }
-        public int Money { get; set; } = 5;
-        public Dictionary<ItemType, int> Items { get; set; } = new();
+        public static int Money { get; set; } = 5;
+        public static Dictionary<ItemType, int> Items { get; set; } = new();
 
-        public void AddItem(ItemType item, int amount = 1)
+        public static void AddItem(ItemType item, int amount = 1)
         {
             if (Items.ContainsKey(item))
             {

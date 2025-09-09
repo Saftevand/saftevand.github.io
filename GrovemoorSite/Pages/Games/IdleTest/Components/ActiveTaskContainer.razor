@@ -8,7 +8,7 @@
             <p>
                 @CurrentTask.Title | @CurrentTask.TickCounter / @CurrentTask.TicksTotal
             </p>
-            <ProgressBar @ref="_progressBar" Progress="@_progress"></ProgressBar>
+            <ProgressBar Progress="@_progress"></ProgressBar>
         </div>
     }
     else
@@ -24,9 +24,8 @@
     public ActiveTask? CurrentTask { get; set; }
     [Parameter]
     public Timer TickTimer { get; set; } = new();
-
+    
     private int _progress = 0;
-    private ProgressBar _progressBar;
     
     
     protected override void OnParametersSet()
@@ -37,6 +36,10 @@
 
     private void OnTick(object? source, ElapsedEventArgs e)
     {
+        if (CurrentTask == null)
+        {
+            return;
+        }
         _progress = System.Math.Min(100, (int)((100 / CurrentTask.TicksTotal) * CurrentTask.TickCounter));
         CurrentTask.TickCounter++;
         if (CurrentTask.TickCounter >= CurrentTask.TicksTotal)
