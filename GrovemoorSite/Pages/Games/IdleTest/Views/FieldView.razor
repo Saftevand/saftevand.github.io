@@ -5,7 +5,7 @@
     <h3>FieldView</h3>
     <div>
         <p>
-            Selected crop: @AutoLoad.Crops[_selectedCrop].Name 
+            Selected crop: @AutoLoad.Items[_selectedCrop].Name 
         </p>
         <span class="material-symbols-outlined">
             @AutoLoad.Items[_selectedCrop].Icon
@@ -55,7 +55,7 @@
     {
         if (_fields.Count < _maxFields)
         {
-            var seedItem = AutoLoad.Crops[_selectedCrop];
+            var seedItem = AutoLoad.Items[_selectedCrop];
             _fieldTask.Add(new(seedItem.Name,seedItem.GrowTime, () => Inventory.AddItem(_selectedCrop), new(){ { ItemType.Seed , 1}}));
         }
     }
