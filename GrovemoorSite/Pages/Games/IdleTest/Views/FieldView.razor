@@ -30,7 +30,7 @@
     private int _maxFields = 5;
     private List<ActiveTask> _fieldTask = new()
     {
-        new("Tomato",250, () => Inventory.AddItem(ItemType.Tomato), new(){ { ItemType.Seed , 1}})
+        new("Tomato",250, () => Inventory.AddItem(ItemType.Tomato), cost: new(){ { ItemType.Seed , 1}}, repeatable: true)
     };
     private ItemType _selectedCrop = ItemType.Tomato;
     private List<Field> _fields = new();
@@ -56,7 +56,7 @@
         if (_fields.Count < _maxFields)
         {
             var seedItem = AutoLoad.Items[_selectedCrop];
-            _fieldTask.Add(new(seedItem.Name,seedItem.GrowTime, () => Inventory.AddItem(_selectedCrop), new(){ { ItemType.Seed , 1}}));
+            _fieldTask.Add(new(seedItem.Name,seedItem.GrowTime, () => Inventory.AddItem(_selectedCrop), cost: new(){ { ItemType.Seed , 1}}, repeatable: true));
         }
     }
 
