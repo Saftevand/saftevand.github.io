@@ -12,11 +12,11 @@
         </span>
     </div>
     <div>
-        <p>Fields: @_fieldTask.Count /  @_maxFields</p>
+        <p>Fields: @_fieldTasks.Count /  @_maxFields</p>
         <button @onclick="_plantField">Plant new field</button>
     </div>
     <div>
-        @foreach(ActiveTask task in _fieldTask)
+        @foreach(ActiveTask task in _fieldTasks)
         {
             <Field @ref="FieldHelper" OnTaskFinished="ClearField" CurrentTask="task"></Field>
         }
@@ -25,13 +25,18 @@
 
 
 @code {
+
+
+
+
+
+
+
     [Parameter]
     public Timer TickTimer { get; set; } = new();
     private int _maxFields = 5;
-    private List<ActiveTask> _fieldTask = new()
-    {
-        new("Tomato",250, () => Inventory.AddItem(ItemType.Tomato), cost: new(){ { ItemType.Seed , 1}}, repeatable: true)
-    };
+    private int _newFieldCost = 5;
+    private List<ActiveTask> _fieldTasks = new();
     private ItemType _selectedCrop = ItemType.Tomato;
     private List<Field> _fields = new();
     private Field FieldHelper { set { _fields.Add(value);}}
@@ -40,7 +45,6 @@
     {
         TickTimer.Elapsed += OnTick;
     }
-
 
     private void OnTick(object? source, ElapsedEventArgs e)
     {
@@ -53,15 +57,21 @@
 
     private void _plantField()
     {
-        if (_fields.Count < _maxFields)
+
+        if (_fieldTasks.Count < _maxFields && Inventory.Money >= _newFieldCost * (_fieldTasks.Count + 1))
         {
+
+            Inventory.Money -= _newFieldCost * (_fieldTasks.Count + 1);
             var seedItem = AutoLoad.Items[_selectedCrop];
-            _fieldTask.Add(new(seedItem.Name,seedItem.GrowTime, () => Inventory.AddItem(_selectedCrop), cost: new(){ { ItemType.Seed , 1}}, repeatable: true));
+            _fieldTasks.Add(new(seedItem.Name,seedItem.GrowTime, () => Inventory.AddItem(_selectedCrop), cost: new(){ { ItemType.Seed , 1}}, repeatable: true));
         }
     }
 
-    private void ClearField(Field field)
+    private void ClearField(Field field, ActiveTask task)
     {
+        Console.WriteLine($"Fields: {_fields.Count} | Tasks: {_fieldTasks.Count}");
+        _fieldTasks.Remove(task);
         _fields.Remove(field);
+        Console.WriteLine($"Fields: {_fields.Count} | Tasks: {_fieldTasks.Count}");
     }
 }

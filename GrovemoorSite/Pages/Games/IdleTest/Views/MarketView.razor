@@ -3,19 +3,56 @@
 
 <div>
     @AutoLoad.Items[ItemType.Seed].Name
-    <button class="flex flex-row" disabled="@(@AutoLoad.Items[ItemType.Seed].BuyPrice >= Inventory.Money ? "false" : "true")" @onclick="@(() => BuyItem(@AutoLoad.Items[ItemType.Seed]))">
+    <button class="flex flex-row hover:cursor-pointer" disabled="@(@AutoLoad.Items[ItemType.Seed].BuyPrice >= Inventory.Money ? "false" : "true")" @onclick="@(() => BuyItem(@AutoLoad.Items[ItemType.Seed]))">
         @AutoLoad.Items[ItemType.Seed].BuyPrice
         <span class="material-symbols-outlined">
             universal_currency_alt
         </span>
     </button>
 </div>
+<div class="p-4 border border-1 border-black rounded">
+    @foreach(ItemType itemtype in Inventory.Items.Keys)
+    {
+        @if(Inventory.Items[itemtype] > 0)
+        {
+            <div class="flex flex-row gap-2">
+                <p>@AutoLoad.Items[itemtype].Name</p>
+                <span class="material-symbols-outlined">
+                    <p>@AutoLoad.Items[itemtype].Icon</p>
+                </span>
+                <p>@AutoLoad.Items[itemtype].SellPrice</p>
+                <span class="material-symbols-outlined">
+                    universal_currency_alt
+                </span>
+                <button @onclick="() => SellItem(AutoLoad.Items[itemtype], false)">Sell</button>
+                <button @onclick="() => SellItem(AutoLoad.Items[itemtype], true)" disabled="@Inventory.Items[itemtype] > 1">Sell all</button>
+            </div>
+        }
+    }
+</div>
 
 @code {
 
     private void BuyItem(Item item)
     {
+        Console.WriteLine($"Buy: {item.Name} | Before: {Inventory.Items[item.Type]} | Money: {Inventory.Money}");
         Inventory.Money -= item.BuyPrice;
         Inventory.AddItem(item.Type);
+        Console.WriteLine($"Buy: {item.Name} | After: {Inventory.Items[item.Type]} | Money: {Inventory.Money}");
+    }
+
+    private void SellItem(Item item, bool sellAll)
+    {
+        if(sellAll)
+        {
+            Inventory.Money += item.SellPrice * Inventory.Items[item.Type];
+            Inventory.RemoveItem(item.Type, Inventory.Items[item.Type]);
+        }
+        else
+        {
+            Inventory.Money += item.SellPrice;
+            Inventory.RemoveItem(item.Type);
+        }
+
     }
 }

@@ -48,26 +48,21 @@
     </div>
     <hr />
 
-    @if (_currentView == ViewType.Overview)
-    {
-        <OverviewView />
-    }
-    @if (_currentView == ViewType.Inventory)
-    {
+    <div class="@(_currentView == ViewType.Overview ? "" : "hidden")">
+        <OverviewView/>
+    </div>
+    <div class="@(_currentView == ViewType.Inventory ? "" : "hidden")">
         <InventoryView TickTimer="_tickTimer" />
-    }
-    @if (_currentView == ViewType.Field)
-    {
+    </div>
+    <div class="@(_currentView == ViewType.Field ? "" : "hidden")">
         <FieldView TickTimer="_tickTimer"  />
-    }
-    @if (_currentView == ViewType.Kitchen)
-    {
+    </div>
+    <div class="@(_currentView == ViewType.Kitchen ? "" : "hidden")">
         <KitchenView />
-    }
-    @if (_currentView == ViewType.Market)
-    {
+    </div>
+    <div class="@(_currentView == ViewType.Market ? "" : "hidden")">
         <MarketView />
-    }
+    </div>
 
     <ActiveTaskContainer TickTimer="_tickTimer" CurrentTask="CurrentTask"></ActiveTaskContainer>
 </div>
@@ -79,7 +74,7 @@
     public ActiveTask CurrentTask = new("Test Task",250, () => Inventory.AddItem(ItemType.Seed), new());
     private ViewType _currentView = ViewType.Overview;
     private int _tickCounter = 0;
-    
+
 
     protected override void OnInitialized()
     {
@@ -87,12 +82,13 @@
         _tickTimer.Elapsed += OnTick();
         _tickTimer.AutoReset = true;
         _tickTimer.Enabled = true;
+        _tickTimer.Start();
     }
 
     private ElapsedEventHandler OnTick()
     {
         _tickCounter++;
-        StateHasChanged();
+        Console.WriteLine(_tickCounter.ToString() + " | " + _tickTimer.ToString() + DateTime.Now.ToString());
         return null!;
     }
 }

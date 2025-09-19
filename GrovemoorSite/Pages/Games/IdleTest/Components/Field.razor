@@ -7,7 +7,7 @@
     [Parameter]
     public required ActiveTask CurrentTask { get; set; }
     [Parameter]
-    public required Action<Field> OnTaskFinished { get; set; }
+    public required Action<Field, ActiveTask> OnTaskFinished { get; set; }
     private int _progress = 0;
     
     public void OnTick()
@@ -26,12 +26,12 @@
                 }
                 else
                 {
-                    OnTaskFinished.Invoke(this);
+                    OnTaskFinished.Invoke(this, CurrentTask);
                 }
             }
             else
             {
-                OnTaskFinished.Invoke(this);
+                OnTaskFinished.Invoke(this, CurrentTask);
             }
         }
         StateHasChanged();
